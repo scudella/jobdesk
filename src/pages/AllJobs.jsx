@@ -1,4 +1,4 @@
 const AllJobs = () => {
-  return <H1>AllJobs Page</H1>;
+  return <h1>AllJobs Page</h1>;
 };
 export default AllJobs;
