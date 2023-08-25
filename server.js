@@ -39,13 +39,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use(cookieParser());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', authenticateUser, userRouter);
 app.use('/api/v1/jobs', authenticateUser, jobRouter);
+
+// Send front-end files directly from client/dist
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
+});
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not found' });
