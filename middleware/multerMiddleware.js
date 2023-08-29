@@ -2,23 +2,11 @@ import multer from 'multer';
 import DataParser from 'datauri/parser.js';
 import path from 'path';
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'client/dist/uploads');
-  },
-  filename: (req, file, cb) => {
-    const fileName = file.originalname;
-    cb(null, fileName);
-  },
-});
-
-// Some free tiers does not allow diskStorage
-// So, providing memory storage
+// Some free tiers do not allow diskStorage
 // It requires package datauri to upload the buffer to cloudinary
-// For now I am leaving at disk storage
-// Otherwise, userController also requires a couple of lines change
+// Also, PM2 restart the app with file upload, as it detects changes in the fs
 
-const memStorage = multer.memoryStorage({});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 
